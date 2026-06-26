@@ -2,10 +2,27 @@ from fastapi import APIRouter, Depends, BackgroundTasks, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
 from app.database import get_db
+from app.repositories.malumot_repo import MalumotRepository
+from app.repositories.taklif_repo import TaklifRepository
+from app.schemas.agent_taklif import AgentTaklifResponse
+from app.schemas.agent_taklif import AgentTaklifResponse
+from app.schemas.malumot import MalumotResponse
 from app.schemas.zapros import ZaprosCreate, ZaprosResponse
 from app.services.matching_service import MatchingService
 
 router = APIRouter(prefix="/api/zaproslar", tags=["Zaproslar"])
+
+@router.get("/malumotlar", response_model=List[MalumotResponse])
+def get_all_trucks(db: Session = Depends(get_db)):
+    """Bazadagi barcha seed qilingan 100 ta yuk mashinasini lokatsiyasi bilan ko'rish"""
+    malumot_repo = MalumotRepository(db)
+    return malumot_repo.get_all()
+
+@router.get("/takliflar", response_model=List[AgentTaklifResponse])
+def get_all_agent_takliflari(db: Session = Depends(get_db)):
+    """AI Agent tomonidan qabul qilingan barcha matching takliflarini ko'rish"""
+    taklif_repo = TaklifRepository(db)
+    return taklif_repo.get_all()
 
 @router.post("", response_model=ZaprosResponse, status_code=status.HTTP_201_CREATED)
 def create_zapros(

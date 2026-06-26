@@ -9,3 +9,8 @@
 docker compose up --build
 ```
 7. Done, Relax:blush:
+
+
+## Swagger Docs
+http://localhost:8000/docs
+
