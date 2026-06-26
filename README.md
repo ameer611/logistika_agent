@@ -7,7 +7,7 @@
 docker compose up --build
 ```
 > It takes some time, because it downloads Ollama local model
-5. Done, Relax:blush:
+5. Done, Relax :blush:
 
 
 ## Swagger Docs
