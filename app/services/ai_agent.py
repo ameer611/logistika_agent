@@ -1,7 +1,6 @@
 from typing import List, Optional
-import re
 
-from langchain_groq import ChatGroq
+from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 
@@ -17,10 +16,10 @@ class TruckSelection(BaseModel):
 
 class AIAgent:
     def __init__(self):
-        self.llm = ChatGroq(
-            groq_api_key=settings.GROQ_API_KEY,
-            model_name=settings.GROQ_MODEL,
-            temperature=0,  # Strict matching
+        self.llm = ChatOllama(
+            model=settings.OLLAMA_MODEL,
+            temperature=0,
+            base_url=settings.OLLAMA_API_URL
         )
 
         self.prompt = ChatPromptTemplate.from_messages(
